@@ -1,6 +1,5 @@
 import requests 
 from bs4 import BeautifulSoup 
-import csv 
 
 URL = "https://thesustainablelivingguide.com/fast-fashion-brands/" 
 r = requests.get(URL)
@@ -11,7 +10,7 @@ badBrands = []
 
 table = soup.find('div', attrs = {'id':'primary'})
 
-for name in table.findAll('div', attrs = {'class':'lwptoc_item'}):
+for name in table.find_all('div', attrs = {'class':'lwptoc_item'}):
     x = name.a['href']
     x = x.replace('_', ' ')
     x = x.replace('#', '')
@@ -28,5 +27,23 @@ for i in range(len(badBrands)):
     brand = brand.lstrip()
     badBrands[i] = brand
 
-
 print(badBrands)
+
+
+
+URL2 = "https://www.panaprium.com/blogs/i/list-of-fast-fashion-brands-to-avoid" 
+r2 = requests.get(URL2)
+
+soup2 = BeautifulSoup(r2.content, 'html5lib')
+
+badBrands2 = []
+
+table2 = soup2.find('div', attrs = {'id':'blog-post'})
+
+for name in table2.select('li'):
+    badBrands2.append(name.text)
+
+
+badBrands2 = badBrands2[5:94]
+print(len(badBrands2))
+print(badBrands2)
