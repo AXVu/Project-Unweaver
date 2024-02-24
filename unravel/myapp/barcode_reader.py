@@ -1,17 +1,19 @@
-import pyzxing as pyx
 import requests
 import json
+import subprocess
 
 def file_to_barcode(file):
-    read = pyx.BarCodeReader()
-    result = read.decode(file)
-    if "parsed" in result[0].keys():
-        encoded = result[0]["parsed"]
-        barcode = encoded.decode('utf-8')
-        print(f"Got barcode {barcode}")
+
+    result = subprocess.run(['zbarimg',file], capture_output=True, text=True, check=True)
+    
+    print(result)
+    
+    if result.stdout:
+        barcode = result.stdout.split(':')[1][:-1]
+        print(barcode)
         return barcode
     else:
-        return "Failed to read barcode"
+        return None
 
 def barcode_to_brand(barcode):
     if barcode == "Failed to read barcode":
