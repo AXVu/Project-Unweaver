@@ -24,9 +24,12 @@ def barcode_to_brand(barcode):
 
     resp = requests.get(f'https://api.upcitemdb.com/prod/trial/lookup?upc={barcode}', headers=headers)
     data = json.loads(resp.text)
-    if data['total'] == 0:
-        return "Barcode read; Failed to find product"
-    return data['items'][0]['brand']
+    if "total" in list(data.keys()):
+        if data['total'] == 0:
+            return "Barcode read; Failed to find product"
+        return data['items'][0]['brand']
+    else:
+        return "Invalid barcode"
 
 def file_to_brand(file):
     return barcode_to_brand(file_to_barcode(file))
