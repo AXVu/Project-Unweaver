@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <title>Upload Picture</title>
 </head>
-<body>
+<body background="{% static 'myapp/images/background.png' %}">
     <h2>Upload Picture</h2>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Upload</button>
+        <button type="submit">
+            <img src="{% static 'myapp/images/Upload-button.png' %}" alt="Upload">
+        </button>
     </form>
     
     {% if image_url %}

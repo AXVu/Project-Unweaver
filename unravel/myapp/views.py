@@ -34,7 +34,7 @@ def brand_check(brand):
     if df.shape[0] > 0:
         return df.to_numpy()[0][1]
     else:
-        return f"{brand} not in database"
+        return " not in database"
 def delete_image(request):
     
     if request.method=='POST':
