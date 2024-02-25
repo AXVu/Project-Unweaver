@@ -11,5 +11,15 @@
         {{ form.as_p }}
         <button type="submit">Upload</button>
     </form>
+    
+    {% if image_url %}
+    <h1>{{brand}} is {{sus}}</h1>
+    <img src="{{ image_url }}" alt="Uploaded Image">
+    <form method="post" action="{% url 'delete_image' %}">
+        {% csrf_token %}
+        <button type="submit">Delete Image</button>
+    </form>
+    {% endif %}
 </body>
 </html>
+
