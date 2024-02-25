@@ -3,16 +3,19 @@ import json
 import subprocess
 
 def file_to_barcode(file):
-
-    result = subprocess.run(['zbarimg',file], capture_output=True, text=True, check=True)
-    
-    print(result)
-    
-    if result.stdout:
-        barcode = result.stdout.split(':')[1][:-1]
-        print(barcode)
-        return barcode
-    else:
+    try:
+        result = subprocess.run(['zbarimg',file], capture_output=True, text=True, check=True)
+        
+        print(result)
+        
+        if result.stdout:
+            barcode = result.stdout.split(':')[1][:-1]
+            print(barcode)
+            return barcode
+        else:
+            return None
+    except subprocess.CalledProcessError as e:
+        print(f"An error occured {e}")
         return None
 
 def barcode_to_brand(barcode):
